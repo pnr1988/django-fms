@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="container">
+            {% if messages %}
+                {% for message in messages %}
+            
+                    <div class="alert alert-{{message.tags}}">
+                        <!-- <a class="close" href="#" data-dismiss="alert">×</a> -->
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+            {% endif %}
+
+            <!-- <h2>Add Details</h2> -->
+            <form method="post" enctype="multipart/form-data" class="horizontal-form">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-3">
+                        <h5>Address Info</h5>
+                        {{ address_form|crispy }}
+                    </div>
+                    <div class="col-md-3">    
+                        <h5>Bank Details</h5>
+                        {{ bank_details_form|crispy }}
+                    </div>
+                    <div class="col-md-3">    
+                        <h5>Educational Documents(Only pdf)</h5>
+                        {{ document_form|crispy }}
+                    </div>
+                    <div class="col-md-3">    
+                        <h5>Identity Card's(Only pdf)</h5>
+                        {{ identity_form|crispy }}
+                    </div>
+                </div>
+
+                <a href="{% url 'home' %}" class="btn btn-danger btn-sm">Cancel</a> &nbsp;&nbsp; <button type="submit" class="btn btn-primary btn-sm">Submit</button> 
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="container">
+            {% if messages %}
+                {% for message in messages %}
+            
+                    <div class="alert alert-{{message.tags}}">
+                        <!-- <a class="close" href="#" data-dismiss="alert">×</a> -->
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+            {% endif %}
+            <div class="row">    
+                <div class="col-md-12">  
+                    <div class="alert alert-info">
+                        <p>
+                            <span>First Name: <strong>{{request.user.first_name}}</strong></span>
+                            <span>Last Name: <strong>{{request.user.last_name}}</strong></span>
+                            <span>Email: <strong>{{request.user.email}}</strong></span>
+                            <span>Designation: <strong>{{request.user.groups.all.0}}</strong></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">   
+                <div class="col-md-4">
+                    {% if not bank_details %}          
+                        <a href="{% url 'personal_info' %}" class="btn btn-primary btn-sm">Add Personal Info</a>
+                    {% else %}
+                        <button class="btn btn-primary btn-sm" disabled>Add Personal Info</button>
+                    {% endif %} 
+                    &nbsp; <a href="{% url 'timesheet_submit' %}" class="btn btn-secondary btn-sm">Timesheet Submission</a>
+                </div>    
+                <div class="col-md-10">
+                </div>
+            </div><br>
+            <div class="row">  
+                <div class="col-md-3 d-flex align-items-stretch">
+                    <div class="card">
+                        <div class="card-header">Address</div>
+                        <div class="card-body">
+                            <p>
+                                {% if address %}
+                                    {% for add in address %}
+                                        <span>Street Address: <strong>{{add.street_address}}</strong></span><br>
+                                        <span>City: <strong>{{add.city}}</strong></span><br>
+                                        <span>State: <strong>{{add.state}}</strong></span><br>
+                                        <span>Postal Code: <strong>{{add.postal_code}}</strong></span>
+                                    {% endfor %}
+                                {% else %}
+                                    <span>Street Address: </span><br>
+                                    <span>City: </span><br>
+                                    <span>State: </span><br>
+                                    <span>Postal Code: </span>
+                                {% endif %}
+                            </p>                            
+                        </div>
+                        <!-- <div class="card-footer">Footer</div> -->
+                    </div>    
+                </div> 
+                <div class="col-md-3 d-flex align-items-stretch">
+                    <div class="card">
+                        <div class="card-header">Bank Details</div>
+                        <div class="card-body">
+                            {% if bank_details %}
+                                {% for bank in bank_details %}
+                                    <span>Account Holder Name: <strong>{{bank.account_holder_name}}</strong></span><br>
+                                    <span>Account Number: <strong>{{bank.account_number}}</strong></span><br>
+                                    <span>Bank Name: <strong>{{bank.bank_name}}</strong></span><br>
+                                    <span>Branch Name: <strong>{{bank.branch_name}}</strong></span><br>
+                                    <span>IFSC Code: <strong>{{bank.ifsc_code}}</strong></span>
+                                {% endfor %}
+                            {% else %}
+                                <span>Account Holder Name: </span><br>
+                                <span>Account Number: </span><br>
+                                <span>Bank Name: </span><br>
+                                <span>Branch Name: </span><br>
+                                <span>IFSC Code: </span>
+                            {% endif %}                            
+                        </div>
+                        <!-- <div class="card-footer">Footer</div> -->
+                    </div>    
+                </div> 
+                <div class="col-md-3 d-flex align-items-stretch">
+                    <div class="card">
+                        <div class="card-header">Educational Documents</div>
+                        <div class="card-body">
+                            {% if educational_docs %}
+                                {% for educational in educational_docs %}
+                                    <span>SSC: <strong>{{educational.ssc}}</strong></span><br>
+                                    <span>Intermediate: <strong>{{educational.inter}}</strong></span><br>
+                                    <span>Graduation: <strong>{{educational.graduation}}</strong></span><br>
+                                    <span>Post Graduation: <strong>{{educational.post_graduation}}</strong></span>
+                                {% endfor %}
+                            {% else %}
+                                <span>SSC: </span><br>
+                                <span>Intermediate: </span><br>
+                                <span>Graduation: </span><br>
+                                <span>Post Graduation: </span>
+                            {% endif %}                            
+                        </div>
+                        <!-- <div class="card-footer">Footer</div> -->
+                    </div>    
+                </div> 
+                <div class="col-md-3 d-flex align-items-stretch">
+                    <div class="card">
+                        <div class="card-header">Identity Documents</div>
+                        <div class="card-body">
+                            {% if identity_docs %}
+                                {% for identity in identity_docs %}
+                                    <span>Aadhar: <strong>{{identity.aadhar}}</strong></span><br>
+                                    <span>Pan: <strong>{{identity.pan}}</strong></span>
+                                {% endfor %}
+                            {% else %}
+                                <span>Aadhar: </span><br>
+                                <span>Pan: </span>
+                            {% endif %}                            
+                        </div>
+                        <!-- <div class="card-footer">Footer</div> -->
+                    </div>    
+                </div> 
+            </div>    
+        </div>
+    </div>
+{% endblock %}
